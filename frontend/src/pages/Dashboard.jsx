@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const fetchRooms = async () => {
     try {
-      const response = await axios.get('/api/rooms');
+      const response = await axios.get('/rooms');
       setRooms(response.data || []);
       setLoading(false);
       setError(null);
@@ -35,7 +35,7 @@ const Dashboard = () => {
     if (!selectedRoom) return;
 
     try {
-      await axios.post('/api/bookings', {
+      await axios.post('/bookings', {
         room_id: selectedRoom.id,
         start_date: bookingDates.start_date,
         end_date: bookingDates.end_date

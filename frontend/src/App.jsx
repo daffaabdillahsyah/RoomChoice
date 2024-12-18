@@ -14,18 +14,20 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-gray-50">
           <Navbar />
-          <main className="flex-1 w-full bg-gray-50">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/room-management" element={<RoomManagement />} />
-              <Route path="/room-layout" element={<RoomLayout />} />
-              <Route path="/my-bookings" element={<MyBookings />} />
-              <Route path="/surveys" element={<Surveys />} />
-            </Routes>
+          <main className="flex-1 w-full mt-16">
+            <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/room-management" element={<RoomManagement />} />
+                <Route path="/room-layout" element={<RoomLayout />} />
+                <Route path="/my-bookings" element={<MyBookings />} />
+                <Route path="/surveys" element={<Surveys />} />
+              </Routes>
+            </div>
           </main>
         </div>
       </Router>

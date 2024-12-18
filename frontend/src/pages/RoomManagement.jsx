@@ -19,7 +19,7 @@ const RoomManagement = () => {
 
   const fetchRooms = async () => {
     try {
-      const response = await axios.get('/api/rooms');
+      const response = await axios.get('/rooms');
       setRooms(response.data || []);
       setLoading(false);
       setError(null);
@@ -40,7 +40,7 @@ const RoomManagement = () => {
         description: e.target.description.value
       };
 
-      await axios.post('/api/rooms', formData);
+      await axios.post('/rooms', formData);
       fetchRooms();
       e.target.reset();
       setError(null);
@@ -54,7 +54,7 @@ const RoomManagement = () => {
     if (!window.confirm('Are you sure you want to delete this room?')) return;
 
     try {
-      await axios.delete(`/api/rooms/${roomId}`);
+      await axios.delete(`/rooms/${roomId}`);
       fetchRooms();
       setError(null);
     } catch (err) {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
 const MyBookings = () => {
@@ -14,9 +14,7 @@ const MyBookings = () => {
 
   const fetchBookings = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/bookings', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const response = await axios.get('/bookings');
       setBookings(response.data);
     } catch (error) {
       console.error('Error fetching bookings:', error);
@@ -26,13 +24,7 @@ const MyBookings = () => {
 
   const handleCancelBooking = async (bookingId) => {
     try {
-      await axios.patch(
-        `http://localhost:5000/api/bookings/${bookingId}/cancel`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        }
-      );
+      await axios.patch(`/bookings/${bookingId}/cancel`);
       setSuccess('Booking cancelled successfully');
       fetchBookings();
     } catch (error) {

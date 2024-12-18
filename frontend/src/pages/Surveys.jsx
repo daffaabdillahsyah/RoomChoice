@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
 const Surveys = () => {
@@ -22,10 +22,7 @@ const Surveys = () => {
   const fetchSurveys = async () => {
     try {
       const response = await axios.get(
-        user?.role === 'admin' ? 'http://localhost:5000/api/surveys' : 'http://localhost:5000/api/surveys/my-surveys',
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        }
+        user?.role === 'admin' ? '/surveys' : '/surveys/my-surveys'
       );
       setSurveys(response.data);
     } catch (error) {
@@ -36,7 +33,7 @@ const Surveys = () => {
 
   const fetchRooms = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/rooms');
+      const response = await axios.get('/rooms');
       setRooms(response.data);
     } catch (error) {
       console.error('Error fetching rooms:', error);
@@ -56,13 +53,7 @@ const Surveys = () => {
     setSuccess('');
 
     try {
-      await axios.post(
-        'http://localhost:5000/api/surveys',
-        formData,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        }
-      );
+      await axios.post('/surveys', formData);
       setSuccess('Survey scheduled successfully');
       setFormData({ room_id: '', schedule_time: '', notes: '' });
       fetchSurveys();
@@ -74,13 +65,7 @@ const Surveys = () => {
 
   const handleCancel = async (surveyId) => {
     try {
-      await axios.patch(
-        `http://localhost:5000/api/surveys/${surveyId}/cancel`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        }
-      );
+      await axios.patch(`/surveys/${surveyId}/cancel`);
       setSuccess('Survey cancelled successfully');
       fetchSurveys();
     } catch (error) {
@@ -91,13 +76,7 @@ const Surveys = () => {
 
   const handleStatusUpdate = async (surveyId, status) => {
     try {
-      await axios.patch(
-        `http://localhost:5000/api/surveys/${surveyId}/status`,
-        { status },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        }
-      );
+      await axios.patch(`/surveys/${surveyId}/status`, { status });
       setSuccess('Survey status updated successfully');
       fetchSurveys();
     } catch (error) {
